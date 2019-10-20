@@ -12,10 +12,10 @@ public class MessageVO {
     private Date messageDate;
     private String messageContent;
     private String photo;
-    private String studentId;
+    private UserVO student;
     private Integer messageTypeId;
     private Integer like;
-    private Integer commentNum;
+    private CommentListVO commentListVO;
 
     public Integer getId() {
         return id;
@@ -49,12 +49,12 @@ public class MessageVO {
         this.photo = photo;
     }
 
-    public String getStudentId() {
-        return studentId;
+    public UserVO getStudent() {
+        return student;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    public void setStudent(UserVO student) {
+        this.student = student;
     }
 
     public Integer getMessageTypeId() {
@@ -73,11 +73,11 @@ public class MessageVO {
         this.like = like;
     }
 
-    public Integer getCommentNum() {
-        return commentNum;
+    public CommentListVO getCommentListVO() {
+        return commentListVO;
     }
 
-    public void setCommentNum(Integer commentNum) {
-        this.commentNum = commentNum;
+    public void setCommentListVO(CommentListVO commentListVO) {
+        this.commentListVO = commentListVO;
     }
 }

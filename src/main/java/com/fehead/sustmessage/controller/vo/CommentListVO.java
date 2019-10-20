@@ -8,7 +8,7 @@ package com.fehead.sustmessage.controller.vo;
 public class CommentListVO {
     private Integer id;
     private Integer messageId;
-    private String commenttatorId;
+    private String commentatorId;
     private String commentContent;
     private String commentPhoto;
 
@@ -28,12 +28,12 @@ public class CommentListVO {
         this.messageId = messageId;
     }
 
-    public String getCommenttatorId() {
-        return commenttatorId;
+    public String getCommentatorId() {
+        return commentatorId;
     }
 
-    public void setCommenttatorId(String commenttatorId) {
-        this.commenttatorId = commenttatorId;
+    public void setCommentatorId(String commentatorId) {
+        this.commentatorId = commentatorId;
     }
 
     public String getCommentContent() {
