@@ -1,6 +1,9 @@
 package com.fehead.sustmessage.service;
 
+import com.fehead.sustmessage.service.model.MessageModel;
 import com.fehead.sustmessage.service.model.UserModel;
+
+import java.util.List;
 
 /**
  * @author Maria
@@ -11,5 +14,7 @@ public interface UserService {
     /**
      * 通过id查找用户
      */
-    UserModel selectUserById(String studentId);
+    UserModel selectUserById(String studentId) throws Exception;
+
+
 }

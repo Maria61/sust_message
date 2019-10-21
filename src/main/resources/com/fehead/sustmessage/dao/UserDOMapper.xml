@@ -4,11 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fehead.sustmessage.dao.UserDOMapper">
 
+    <!--通过id查找用户-->
     <select id="selectUserById" parameterType="String" resultType="com.fehead.sustmessage.dataobject.UserDO">
         select id,student_id studentId,telephone,display_name displayName,avatar
         from user
         where student_id=#{studentId}
     </select>
+
+
 
 
 </mapper>

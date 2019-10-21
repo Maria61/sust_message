@@ -14,7 +14,7 @@ public class MessageVO {
     private String photo;
     private UserVO student;
     private Integer messageTypeId;
-    private Integer like;
+    private Integer likes;
     private CommentListVO commentListVO;
 
     public Integer getId() {
@@ -65,12 +65,12 @@ public class MessageVO {
         this.messageTypeId = messageTypeId;
     }
 
-    public Integer getLike() {
-        return like;
+    public Integer getlikes() {
+        return likes;
     }
 
-    public void setLike(Integer like) {
-        this.like = like;
+    public void setlikes(Integer likes) {
+        this.likes = likes;
     }
 
     public CommentListVO getCommentListVO() {

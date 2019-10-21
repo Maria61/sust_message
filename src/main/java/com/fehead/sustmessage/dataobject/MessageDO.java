@@ -16,7 +16,7 @@ public class MessageDO {
     private Boolean isAnonymous;
     private String studentId;
     private Integer messageTypeId;
-    private Integer like;
+    private Integer likes;
 
     public Integer getId() {
         return id;
@@ -74,12 +74,12 @@ public class MessageDO {
         this.messageTypeId = messageTypeId;
     }
 
-    public Integer getLike() {
-        return like;
+    public Integer getlikes() {
+        return likes;
     }
 
-    public void setLike(Integer like) {
-        this.like = like;
+    public void setlikes(Integer likes) {
+        this.likes = likes;
     }
 
 }

@@ -4,4 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fehead.sustmessage.dao.MessageDOMapper">
 
+    <select id="selectAllMessages" parameterType="String" resultType="com.fehead.sustmessage.dataobject.MessageDO">
+        select id,message_date messageDate,message_content messageContent,
+        photo,is_anonymous isAnonymous,student_id studentId,message_type_id messageTypeId,likes
+        from message
+        where student_id=#{studentId}
+    </select>
+    <!--<insert id=""-->
 </mapper>

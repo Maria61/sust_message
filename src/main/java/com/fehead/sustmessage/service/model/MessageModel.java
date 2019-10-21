@@ -16,15 +16,15 @@ public class MessageModel {
     private Boolean isAnonymous;
     private UserModel userModel;
     private Integer messageTypeId;
-    private Integer like;
-    private CommentModel commentModel;
+    private Integer likes;
+    private List<CommentModel> commentModelList;
 
-    public CommentModel getCommentModel() {
-        return commentModel;
+    public List<CommentModel> getCommentModelList() {
+        return commentModelList;
     }
 
-    public void setCommentModel(CommentModel commentModel) {
-        this.commentModel = commentModel;
+    public void setCommentModelList(List<CommentModel> commentModelList) {
+        this.commentModelList = commentModelList;
     }
 
     public Integer getId() {
@@ -68,12 +68,12 @@ public class MessageModel {
         this.messageTypeId = messageTypeId;
     }
 
-    public Integer getLike() {
-        return like;
+    public Integer getlikes() {
+        return likes;
     }
 
-    public void setLike(Integer like) {
-        this.like = like;
+    public void setlikes(Integer likes) {
+        this.likes = likes;
     }
 
     public String getPhoto() {

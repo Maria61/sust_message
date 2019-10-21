@@ -1,6 +1,9 @@
 package com.fehead.sustmessage.dao;
 
+import com.fehead.sustmessage.dataobject.MessageDO;
 import com.fehead.sustmessage.dataobject.UserDO;
+
+import java.util.List;
 
 /**
  * @author Maria
@@ -12,5 +15,7 @@ public interface UserDOMapper {
      * 通过id查找用户
      */
     UserDO selectUserById(String studentId);
+
+
 
 }
