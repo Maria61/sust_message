@@ -47,14 +47,7 @@ public class MessageController {
         logger.info("PARAM: studentId "+studentId);
         List<MessageVO> messageVOList = new ArrayList<>();
         List<MessageModel> messageModelList = new ArrayList<>();
-        try {
-            messageModelList = messageService.selectAllMessages(studentId);
-        } catch (Exception e) {
-            throw new BusinessException(EmBusinessError.USER_NOT_EXIST);
-        }
-        if(messageModelList.size() == 0){
-            throw new BusinessException(EmBusinessError.NO_MESSAGES);
-        }
+        messageModelList = messageService.selectAllMessages(studentId);
 
         for(MessageModel messageModel:messageModelList){
             MessageVO messageVO = new MessageVO();
@@ -63,6 +56,7 @@ public class MessageController {
             UserVO userVO = new UserVO();
             UserModel userModel = messageModel.getUserModel();
             BeanUtils.copyProperties(userModel,userVO);
+            messageVO.setStudent(userVO);
 
             List<CommentListVO> commentListVOList = new ArrayList<>();
             List<CommentModel> commentModelList = messageModel.getCommentModelList();
@@ -74,6 +68,7 @@ public class MessageController {
                     commentListVOList.add(commentListVO);
                 }
             }
+            messageVO.setCommentListVO(commentListVOList);
 
             messageVOList.add(messageVO);
         }

@@ -14,7 +14,7 @@ public interface UserService {
     /**
      * 通过id查找用户
      */
-    UserModel selectUserById(String studentId) throws Exception;
+    UserModel selectUserById(String studentId) ;
 
 
 }

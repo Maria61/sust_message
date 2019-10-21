@@ -29,17 +29,18 @@ public class CommentServiceImpl implements CommentService{
 
 
     @Override
-    public List<CommentModel> selectCommentByMessageId(Integer messageId) throws Exception {
+    public List<CommentModel> selectCommentByMessageId(Integer messageId){
         List<CommentDO> commentDOList = commentDOMapper.selectCommentByMessageId(messageId);
         List<CommentModel> commentModelList = new ArrayList<>();
-        if(commentDOList != null){
-            BeanUtils.copyProperties(commentDOList,commentModelList);
-        }
-        for(CommentModel commentModel:commentModelList){
-            for(CommentDO commentDO:commentDOList){
-                UserModel userModel = userService.selectUserById(commentDO.getCommentStudentId());
-                commentModel.setUser(userModel);
-            }
+
+        for(CommentDO commentDO:commentDOList){
+            CommentModel commentModel = new CommentModel();
+            BeanUtils.copyProperties(commentDO,commentModel);
+
+            UserModel userModel = userService.selectUserById(commentDO.getCommentStudentId());
+            commentModel.setUser(userModel);
+
+            commentModelList.add(commentModel);
         }
         return commentModelList;
     }

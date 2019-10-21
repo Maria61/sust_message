@@ -15,5 +15,5 @@ public interface CommentService {
      * @param messageId
      * @return
      */
-    List<CommentModel>  selectCommentByMessageId(Integer messageId) throws Exception;
+    List<CommentModel>  selectCommentByMessageId(Integer messageId);
 }

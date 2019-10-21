@@ -15,5 +15,5 @@ public interface MessageService {
      * @param studentId
      * @return
      */
-    List<MessageModel> selectAllMessages(String studentId) throws Exception;
+    List<MessageModel> selectAllMessages(String studentId);
 }

@@ -1,6 +1,7 @@
 package com.fehead.sustmessage.controller.vo;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Maria
@@ -15,7 +16,7 @@ public class MessageVO {
     private UserVO student;
     private Integer messageTypeId;
     private Integer likes;
-    private CommentListVO commentListVO;
+    private List<CommentListVO> commentListVO;
 
     public Integer getId() {
         return id;
@@ -65,19 +66,19 @@ public class MessageVO {
         this.messageTypeId = messageTypeId;
     }
 
-    public Integer getlikes() {
+    public Integer getLikes() {
         return likes;
     }
 
-    public void setlikes(Integer likes) {
+    public void setLikes(Integer likes) {
         this.likes = likes;
     }
 
-    public CommentListVO getCommentListVO() {
+    public List<CommentListVO> getCommentListVO() {
         return commentListVO;
     }
 
-    public void setCommentListVO(CommentListVO commentListVO) {
+    public void setCommentListVO(List<CommentListVO> commentListVO) {
         this.commentListVO = commentListVO;
     }
 }

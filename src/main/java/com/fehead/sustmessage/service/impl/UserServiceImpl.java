@@ -31,12 +31,9 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserModel selectUserById(String studentId) throws Exception {
+    public UserModel selectUserById(String studentId) {
 
         UserDO userDO = userDOMapper.selectUserById(studentId);
-        if(userDO == null){
-            throw new Exception();
-        }
         UserModel userModel = new UserModel();
         if(userDO != null){
             BeanUtils.copyProperties(userDO,userModel);

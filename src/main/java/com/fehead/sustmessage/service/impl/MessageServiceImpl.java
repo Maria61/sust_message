@@ -33,27 +33,32 @@ public class MessageServiceImpl implements MessageService {
     CommentService commentService;
 
     @Override
-    public List<MessageModel> selectAllMessages(String studentId) throws Exception {
+    public List<MessageModel> selectAllMessages(String studentId) {
         List<MessageModel> messageModelList = new ArrayList<>();
         List<MessageDO> messageDOList = messageDOMapper.selectAllMessages(studentId);
-        if(messageDOList != null){
-            BeanUtils.copyProperties(messageDOList,messageModelList);
-        }else{
-            return null;
+        UserModel userModel = userService.selectUserById(studentId);
+
+        for(MessageDO messageDO:messageDOList){
+
+            MessageModel  messageModel = new MessageModel();
+            BeanUtils.copyProperties(messageDO,messageModel);
+
+            messageModel.setUserModel(userModel);
+
+            List<CommentModel> commentModelList = commentService.selectCommentByMessageId(messageDO.getId());
+            messageModel.setCommentModelList(commentModelList);
+
+            messageModelList.add(messageModel);
+
         }
 
-        /*
-        UserDO userDO = userDOMapper.selectUserById(studentId);
-        UserModel userModel = new UserModel();
-        BeanUtils.copyProperties(userDO,userModel);
-        */
-        UserModel userModel = userService.selectUserById(studentId);
-        for(MessageModel messageModel:messageModelList){
-            messageModel.setUserModel(userModel);
-            List<CommentModel> commentModelList =
-                    commentService.selectCommentByMessageId(messageModel.getId());
-            messageModel.setCommentModelList(commentModelList);
-        }
+//        UserModel userModel = userService.selectUserById(studentId);
+//        for(MessageModel messageModel:messageModelList){
+//            messageModel.setUserModel(userModel);
+//            List<CommentModel> commentModelList =
+//                    commentService.selectCommentByMessageId(messageModel.getId());
+//            messageModel.setCommentModelList(commentModelList);
+//        }
 
         return messageModelList;
     }
