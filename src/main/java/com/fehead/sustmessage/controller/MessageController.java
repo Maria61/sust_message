@@ -106,4 +106,12 @@ public class MessageController {
 
         return CommonReturnType.create("发布成功");
     }
+
+    @DeleteMapping("/user/{studentId}/myMessages/{messageId}")
+    public CommonReturnType delect(@PathVariable("studentId") String studentId,
+                                   @PathVariable("messageId") Integer messageId){
+
+        messageService.delectMessage(messageId);
+        return CommonReturnType.create("删除成功");
+    }
 }

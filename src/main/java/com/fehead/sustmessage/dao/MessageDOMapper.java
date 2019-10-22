@@ -26,4 +26,6 @@ public interface MessageDOMapper {
      * @param messageTypeId
      */
     void publish(MessageDO messageDO);
+
+    void delect(Integer messageId);
 }

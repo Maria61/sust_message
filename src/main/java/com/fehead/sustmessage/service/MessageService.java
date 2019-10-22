@@ -22,4 +22,9 @@ public interface MessageService {
      * @param messageModel
      */
     void insertMessage(MessageModel messageModel);
+
+    /**
+     * 删除留言
+     */
+    void delectMessage(Integer messageId);
 }

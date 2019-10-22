@@ -73,4 +73,15 @@ public class MessageServiceImpl implements MessageService {
         messageDO.setStudentId(messageModel.getUserModel().getStudentId());
         messageDOMapper.publish(messageDO);
     }
+
+    /**
+     * 删除留言
+     * @param messageId
+     */
+    @Override
+    public void delectMessage(Integer messageId) {
+        messageDOMapper.delect(messageId);
+    }
+
+
 }

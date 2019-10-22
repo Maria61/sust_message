@@ -18,6 +18,9 @@
         values
         (#{messageDate},#{messageContent},#{photo},#{isAnonymous},#{studentId},#{messageTypeId})
     </insert>
-
+    <!--删除留言-->
+    <delete id="delect" parameterType="Integer">
+        delete from message where id=#{messageId}
+    </delete>
 
 </mapper>
