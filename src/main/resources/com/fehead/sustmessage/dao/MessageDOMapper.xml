@@ -5,11 +5,18 @@
 <mapper namespace="com.fehead.sustmessage.dao.MessageDOMapper">
 
     <!--通过用户id查找所有留言-->
-    <select id="selectAllMessages" parameterType="String" resultType="com.fehead.sustmessage.dataobject.MessageDO">
+    <select id="selectMessages" parameterType="String" resultType="com.fehead.sustmessage.dataobject.MessageDO">
         select id,message_date messageDate,message_content messageContent,
         photo,is_anonymous isAnonymous,student_id studentId,message_type_id messageTypeId,likes
         from message
         where student_id=#{studentId}
+    </select>
+
+    <!--查找所有留言-->
+    <select id="selectAllMessages" resultType="com.fehead.sustmessage.dataobject.MessageDO">
+        select id,message_date messageDate,message_content messageContent,
+        photo,is_anonymous isAnonymous,student_id studentId,message_type_id messageTypeId,likes
+        from message
     </select>
     <!--插入留言-->
     <insert id="publish" parameterType="com.fehead.sustmessage.dataobject.MessageDO">
@@ -22,5 +29,14 @@
     <delete id="delect" parameterType="Integer">
         delete from message where id=#{messageId}
     </delete>
+
+    <!--修改留言-->
+    <update id="update" parameterType="com.fehead.sustmessage.dataobject.MessageDO">
+        update message
+        set message_date=#{messageDate},message_content=#{messageContent},photo=#{photo},
+        is_anonymous=#{isAnonymous},student_id=#{studentId},message_type_id=#{messageTypeId}
+        where id=#{id}
+
+    </update>
 
 </mapper>

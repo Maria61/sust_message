@@ -15,7 +15,13 @@ public interface MessageService {
      * @param studentId
      * @return
      */
-    List<MessageModel> selectAllMessages(String studentId);
+    List<MessageModel> selectMessages(String studentId);
+
+    /**
+     * 查找所有留言
+     * @return
+     */
+    List<MessageModel> selectAllMessages();
 
     /**
      * 发布留言
@@ -27,4 +33,12 @@ public interface MessageService {
      * 删除留言
      */
     void delectMessage(Integer messageId);
+
+    /**
+     * 修改留言
+     * @param messageModel
+     */
+    void updateMessage(MessageModel messageModel);
+
+
 }

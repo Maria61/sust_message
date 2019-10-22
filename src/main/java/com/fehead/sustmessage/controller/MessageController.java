@@ -16,6 +16,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import sun.plugin2.message.Message;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,11 +46,11 @@ public class MessageController {
      * @throws BusinessException
      */
     @GetMapping("/user/{studentId}/myMessages")
-    public CommonReturnType getAllMessages(@PathVariable("studentId") String studentId) throws BusinessException {
+    public CommonReturnType getMessages(@PathVariable("studentId") String studentId) throws BusinessException {
         logger.info("PARAM: studentId "+studentId);
         List<MessageVO> messageVOList = new ArrayList<>();
         List<MessageModel> messageModelList = new ArrayList<>();
-        messageModelList = messageService.selectAllMessages(studentId);
+        messageModelList = messageService.selectMessages(studentId);
 
         for(MessageModel messageModel:messageModelList){
             MessageVO messageVO = new MessageVO();
@@ -114,4 +115,64 @@ public class MessageController {
         messageService.delectMessage(messageId);
         return CommonReturnType.create("删除成功");
     }
+
+    @PutMapping("/user/{studentId}/myMessages/{messageId}")
+    public CommonReturnType update(@PathVariable("studentId") String studentId,
+                       @PathVariable("messageId") Integer messageId,
+                       @RequestParam("messageContent") String messageContent,
+                       @RequestParam("photo") String photo,
+                       @RequestParam("isAnonymous") Boolean isAnonymous,
+                       @RequestParam("messageTypeId") Integer messageTypeId){
+
+        MessageModel messageModel = new MessageModel();
+        messageModel.setId(messageId);
+        messageModel.setUserModel(userService.selectUserById(studentId));
+        messageModel.setAnonymous(isAnonymous);
+        messageModel.setMessageContent(messageContent);
+        messageModel.setMessageDate(new Date());
+        messageModel.setMessageTypeId(messageTypeId);
+        messageModel.setPhoto(photo);
+
+        messageService.updateMessage(messageModel);
+        return CommonReturnType.create("修改成功");
+    }
+
+    /**
+     * 查看所有留言
+     * @return
+     */
+
+    @GetMapping("/message/lists")
+    public CommonReturnType getAllMessages(){
+        List<MessageVO> messageVOList = new ArrayList<>();
+        List<MessageModel> messageModelList = new ArrayList<>();
+        messageModelList = messageService.selectAllMessages();
+
+        for(MessageModel messageModel:messageModelList){
+            MessageVO messageVO = new MessageVO();
+            BeanUtils.copyProperties(messageModel,messageVO);
+
+            UserVO userVO = new UserVO();
+            UserModel userModel = messageModel.getUserModel();
+            BeanUtils.copyProperties(userModel,userVO);
+            messageVO.setStudent(userVO);
+
+            List<CommentListVO> commentListVOList = new ArrayList<>();
+            List<CommentModel> commentModelList = messageModel.getCommentModelList();
+            if(commentModelList != null){
+                for(CommentModel commentModel:commentModelList){
+                    CommentListVO commentListVO = new CommentListVO();
+                    BeanUtils.copyProperties(commentModel,commentListVO);
+                    commentListVO.setCommentatorId(commentModel.getUser().getStudentId());
+                    commentListVOList.add(commentListVO);
+                }
+            }
+            messageVO.setCommentListVO(commentListVOList);
+
+            messageVOList.add(messageVO);
+        }
+        return CommonReturnType.create(messageVOList);
+    }
+
+
 }

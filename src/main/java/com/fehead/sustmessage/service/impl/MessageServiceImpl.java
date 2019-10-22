@@ -38,9 +38,9 @@ public class MessageServiceImpl implements MessageService {
      * @return
      */
     @Override
-    public List<MessageModel> selectAllMessages(String studentId) {
+    public List<MessageModel> selectMessages(String studentId) {
         List<MessageModel> messageModelList = new ArrayList<>();
-        List<MessageDO> messageDOList = messageDOMapper.selectAllMessages(studentId);
+        List<MessageDO> messageDOList = messageDOMapper.selectMessages(studentId);
         UserModel userModel = userService.selectUserById(studentId);
 
         for(MessageDO messageDO:messageDOList){
@@ -48,6 +48,33 @@ public class MessageServiceImpl implements MessageService {
             MessageModel  messageModel = new MessageModel();
             BeanUtils.copyProperties(messageDO,messageModel);
 
+            messageModel.setUserModel(userModel);
+
+            List<CommentModel> commentModelList = commentService.selectCommentByMessageId(messageDO.getId());
+            messageModel.setCommentModelList(commentModelList);
+
+            messageModelList.add(messageModel);
+
+        }
+
+        return messageModelList;
+    }
+
+    /**
+     * 查找所有留言
+     * @return
+     */
+    @Override
+    public List<MessageModel> selectAllMessages() {
+        List<MessageModel> messageModelList = new ArrayList<>();
+        List<MessageDO> messageDOList = messageDOMapper.selectAllMessages();
+
+
+        for(MessageDO messageDO:messageDOList){
+            MessageModel  messageModel = new MessageModel();
+            BeanUtils.copyProperties(messageDO,messageModel);
+
+            UserModel userModel = userService.selectUserById(messageDO.getStudentId());
             messageModel.setUserModel(userModel);
 
             List<CommentModel> commentModelList = commentService.selectCommentByMessageId(messageDO.getId());
@@ -81,6 +108,20 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public void delectMessage(Integer messageId) {
         messageDOMapper.delect(messageId);
+    }
+
+    /**
+     *修改留言
+     * @param messageModel
+     */
+    @Override
+    public void updateMessage(MessageModel messageModel) {
+        MessageDO messageDO = new MessageDO();
+        if(messageModel != null){
+            BeanUtils.copyProperties(messageModel,messageDO);
+        }
+        messageDO.setStudentId(messageModel.getUserModel().getStudentId());
+        messageDOMapper.update(messageDO);
     }
 
 

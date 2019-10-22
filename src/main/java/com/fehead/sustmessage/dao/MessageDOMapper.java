@@ -16,7 +16,7 @@ public interface MessageDOMapper {
      * @param studentId
      * @return
      */
-    List<MessageDO> selectAllMessages(String studentId);
+    List<MessageDO> selectMessages(String studentId);
 
     /**
      *发布留言
@@ -27,5 +27,21 @@ public interface MessageDOMapper {
      */
     void publish(MessageDO messageDO);
 
+    /**
+     * 删除留言
+     * @param messageId
+     */
     void delect(Integer messageId);
+
+    /**
+     * 修改留言
+     * @param messageDO
+     */
+    void update(MessageDO messageDO);
+
+    /**
+     * 查找所有留言
+     * @return
+     */
+    List<MessageDO> selectAllMessages();
 }
