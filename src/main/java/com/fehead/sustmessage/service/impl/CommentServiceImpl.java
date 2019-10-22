@@ -27,6 +27,11 @@ public class CommentServiceImpl implements CommentService{
     @Autowired
     private UserService userService;
 
+    /**
+     * 通过留言id查找评论
+     * @param messageId
+     * @return
+     */
 
     @Override
     public List<CommentModel> selectCommentByMessageId(Integer messageId){

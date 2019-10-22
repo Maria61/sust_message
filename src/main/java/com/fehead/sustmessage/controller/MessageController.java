@@ -7,6 +7,7 @@ import com.fehead.sustmessage.error.BusinessException;
 import com.fehead.sustmessage.error.EmBusinessError;
 import com.fehead.sustmessage.response.CommonReturnType;
 import com.fehead.sustmessage.service.MessageService;
+import com.fehead.sustmessage.service.UserService;
 import com.fehead.sustmessage.service.model.CommentModel;
 import com.fehead.sustmessage.service.model.MessageModel;
 import com.fehead.sustmessage.service.model.UserModel;
@@ -14,12 +15,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,6 +34,9 @@ public class MessageController {
 
     @Autowired
     MessageService messageService;
+
+    @Autowired
+    UserService userService;
 
     /**
      * 通过用户id查找用户发布的所有留言
@@ -73,5 +75,35 @@ public class MessageController {
             messageVOList.add(messageVO);
         }
         return CommonReturnType.create(messageVOList);
+    }
+
+    /**
+     * 发布留言
+     * @param studentId
+     * @param messageContent
+     * @param photo
+     * @param isAnonymous
+     * @param messageTypeId
+     * @return
+     */
+
+    @PostMapping("/user/{studentId}/publish")
+    public CommonReturnType publish(@PathVariable("studentId") String studentId,
+                                    @RequestParam(value = "messageContent") String messageContent,
+                                    @RequestParam(value = "photo" ) String  photo,
+                                    @RequestParam(value = "isAnonymous") Boolean isAnonymous,
+                                    @RequestParam(value = "messageTypeId") Integer messageTypeId
+                                    ){
+        MessageModel messageModel = new MessageModel();
+        messageModel.setMessageContent(messageContent);
+        messageModel.setPhoto(photo);
+        messageModel.setMessageDate(new Date());
+        messageModel.setMessageTypeId(messageTypeId);
+        messageModel.setAnonymous(isAnonymous);
+        messageModel.setUserModel(userService.selectUserById(studentId));
+
+        messageService.insertMessage(messageModel);
+
+        return CommonReturnType.create("发布成功");
     }
 }

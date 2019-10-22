@@ -32,6 +32,11 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     CommentService commentService;
 
+    /**
+     * 通过用户Id查看所有留言
+     * @param studentId
+     * @return
+     */
     @Override
     public List<MessageModel> selectAllMessages(String studentId) {
         List<MessageModel> messageModelList = new ArrayList<>();
@@ -52,14 +57,20 @@ public class MessageServiceImpl implements MessageService {
 
         }
 
-//        UserModel userModel = userService.selectUserById(studentId);
-//        for(MessageModel messageModel:messageModelList){
-//            messageModel.setUserModel(userModel);
-//            List<CommentModel> commentModelList =
-//                    commentService.selectCommentByMessageId(messageModel.getId());
-//            messageModel.setCommentModelList(commentModelList);
-//        }
-
         return messageModelList;
+    }
+
+    /**
+     * 发布留言
+     * @param messageModel
+     */
+    @Override
+    public void insertMessage(MessageModel messageModel) {
+        MessageDO messageDO = new MessageDO();
+        if(messageModel != null){
+            BeanUtils.copyProperties(messageModel,messageDO);
+        }
+        messageDO.setStudentId(messageModel.getUserModel().getStudentId());
+        messageDOMapper.publish(messageDO);
     }
 }

@@ -30,6 +30,11 @@ public class UserServiceImpl implements UserService {
     private UserDOMapper userDOMapper;
 
 
+    /**
+     * 通过学号查找用户
+     * @param studentId
+     * @return
+     */
     @Override
     public UserModel selectUserById(String studentId) {
 

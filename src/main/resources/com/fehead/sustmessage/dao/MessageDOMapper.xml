@@ -4,11 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fehead.sustmessage.dao.MessageDOMapper">
 
+    <!--通过用户id查找所有留言-->
     <select id="selectAllMessages" parameterType="String" resultType="com.fehead.sustmessage.dataobject.MessageDO">
         select id,message_date messageDate,message_content messageContent,
         photo,is_anonymous isAnonymous,student_id studentId,message_type_id messageTypeId,likes
         from message
         where student_id=#{studentId}
     </select>
-    <!--<insert id=""-->
+    <!--插入留言-->
+    <insert id="publish" parameterType="com.fehead.sustmessage.dataobject.MessageDO">
+        insert into message
+        (message_date,message_content,photo,is_anonymous,student_id,message_type_id)
+        values
+        (#{messageDate},#{messageContent},#{photo},#{isAnonymous},#{studentId},#{messageTypeId})
+    </insert>
+
+
 </mapper>

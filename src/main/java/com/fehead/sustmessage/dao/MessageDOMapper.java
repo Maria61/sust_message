@@ -25,5 +25,5 @@ public interface MessageDOMapper {
      * @param isAnonymous
      * @param messageTypeId
      */
-    void publish(String messageContent,String photo,Boolean isAnonymous,Integer messageTypeId);
+    void publish(MessageDO messageDO);
 }

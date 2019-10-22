@@ -16,4 +16,10 @@ public interface MessageService {
      * @return
      */
     List<MessageModel> selectAllMessages(String studentId);
+
+    /**
+     * 发布留言
+     * @param messageModel
+     */
+    void insertMessage(MessageModel messageModel);
 }

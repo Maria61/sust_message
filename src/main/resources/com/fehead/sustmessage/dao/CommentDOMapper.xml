@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fehead.sustmessage.dao.CommentDOMapper">
 
+    <!--通过留言id查找评论-->
     <select id="selectCommentByMessageId" parameterType="Integer" resultType="com.fehead.sustmessage.dataobject.CommentDO">
             select id,message_id messageId,comment_content commentContent,comment_photo commentPhoto,comment_date commentDate,comment_student_id commentStudentId
             from `comment`
