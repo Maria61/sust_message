@@ -11,4 +11,20 @@
             where
             message_id=#{messageId}
     </select>
+
+    <!--通过评论id查找评论-->
+    <select id="selectCommentByCommentId" parameterType="Integer" resultType="com.fehead.sustmessage.dataobject.CommentDO">
+        select id,message_id messageId,comment_content commentContent,comment_photo commentPhoto,comment_date commentDate,comment_student_id commentStudentId
+        from `comment`
+        where
+        id = #{commentId}
+    </select>
+
+    <!--发表评论-->
+    <insert id="insertComment" parameterType="com.fehead.sustmessage.dataobject.CommentDO" >
+        insert into comment
+        (message_id,comment_content ,comment_photo ,comment_date ,comment_student_id )
+        values
+        (#{messageId},#{commentContent},#{commentPhoto},#{commentDate},#{commentStudentId})
+    </insert>
 </mapper>

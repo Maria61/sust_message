@@ -16,4 +16,16 @@ public interface CommentDOMapper {
      * @return
      */
     List<CommentDO> selectCommentByMessageId(Integer messageId);
+    /**
+     * 通过评论id查找评论
+     * @param commentId
+     * @return
+     */
+    CommentDO selectCommentByCommentId(Integer commentId);
+
+    /**
+     * 发布评论
+     * @param commentDO
+     */
+    void insertComment(CommentDO commentDO);
 }

@@ -1,5 +1,6 @@
 package com.fehead.sustmessage.service;
 
+import com.fehead.sustmessage.dataobject.CommentDO;
 import com.fehead.sustmessage.service.model.CommentModel;
 
 import java.util.List;
@@ -16,4 +17,17 @@ public interface CommentService {
      * @return
      */
     List<CommentModel>  selectCommentByMessageId(Integer messageId);
+
+    /**
+     * 通过评论id查找评论
+     * @param commentId
+     * @return
+     */
+    CommentModel selectCommentByCommentId(Integer commentId);
+
+    /**
+     * 发布评论
+     * @param messageId
+     */
+    void insertComment(CommentModel commentModel);
 }

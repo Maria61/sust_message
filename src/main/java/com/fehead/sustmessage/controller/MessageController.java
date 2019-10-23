@@ -1,11 +1,14 @@
 package com.fehead.sustmessage.controller;
 
+import com.fehead.sustmessage.controller.vo.CommentDetailVO;
 import com.fehead.sustmessage.controller.vo.CommentListVO;
 import com.fehead.sustmessage.controller.vo.MessageVO;
 import com.fehead.sustmessage.controller.vo.UserVO;
+import com.fehead.sustmessage.dataobject.CommentDO;
 import com.fehead.sustmessage.error.BusinessException;
 import com.fehead.sustmessage.error.EmBusinessError;
 import com.fehead.sustmessage.response.CommonReturnType;
+import com.fehead.sustmessage.service.CommentService;
 import com.fehead.sustmessage.service.MessageService;
 import com.fehead.sustmessage.service.UserService;
 import com.fehead.sustmessage.service.model.CommentModel;
@@ -38,6 +41,9 @@ public class MessageController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    CommentService commentService;
 
     /**
      * 通过用户id查找用户发布的所有留言
@@ -87,7 +93,6 @@ public class MessageController {
      * @param messageTypeId
      * @return
      */
-
     @PostMapping("/user/{studentId}/publish")
     public CommonReturnType publish(@PathVariable("studentId") String studentId,
                                     @RequestParam(value = "messageContent") String messageContent,
@@ -108,6 +113,12 @@ public class MessageController {
         return CommonReturnType.create("发布成功");
     }
 
+    /**
+     * 删除留言
+     * @param studentId
+     * @param messageId
+     * @return
+     */
     @DeleteMapping("/user/{studentId}/myMessages/{messageId}")
     public CommonReturnType delect(@PathVariable("studentId") String studentId,
                                    @PathVariable("messageId") Integer messageId){
@@ -116,6 +127,16 @@ public class MessageController {
         return CommonReturnType.create("删除成功");
     }
 
+    /**
+     * 修改留言
+     * @param studentId
+     * @param messageId
+     * @param messageContent
+     * @param photo
+     * @param isAnonymous
+     * @param messageTypeId
+     * @return
+     */
     @PutMapping("/user/{studentId}/myMessages/{messageId}")
     public CommonReturnType update(@PathVariable("studentId") String studentId,
                        @PathVariable("messageId") Integer messageId,
@@ -174,5 +195,50 @@ public class MessageController {
         return CommonReturnType.create(messageVOList);
     }
 
+    /**
+     * 查看留言评论详情
+     * @param messageId
+     * @param commentId
+     * @return
+     */
+    @GetMapping("/message/{messageId}/comments/{commentId}")
+    public CommonReturnType getCommentByCommentId(@PathVariable("messageId") Integer messageId,
+                                                  @PathVariable("commentId") Integer commentId){
+        CommentDetailVO commentDetailVO = new CommentDetailVO();
+        CommentModel commentModel = commentService.selectCommentByCommentId(commentId);
+        if(commentModel != null){
+            BeanUtils.copyProperties(commentModel,commentDetailVO);
+        }
+        UserVO userVO = new UserVO();
+        UserModel userModel = commentModel.getUser();
+        BeanUtils.copyProperties(userModel,userVO);
+        commentDetailVO.setCommentator(userVO);
+        return CommonReturnType.create(commentDetailVO);
+    }
+
+    /**
+     * 发布评论
+     * @param studentId
+     * @param messageId
+     * @param commentContent
+     * @param commentPhoto
+     * @return
+     */
+    @PutMapping("/user/{studentId}/{messageId}/comment")
+    public CommonReturnType comment(@PathVariable("studentId") String studentId,
+                                    @PathVariable("messageId") Integer messageId,
+                                    @RequestParam("commentContent") String commentContent,
+                                    @RequestParam("commentPhoto") String commentPhoto){
+
+        CommentModel commentModel = new CommentModel();
+        commentModel.setMessageId(messageId);
+        commentModel.setCommentContent(commentContent);
+        commentModel.setCommentPhoto(commentPhoto);
+        commentModel.setCommentDate(new Date());
+        UserModel userModel = userService.selectUserById(studentId);
+        commentModel.setUser(userModel);
+        commentService.insertComment(commentModel);
+        return CommonReturnType.create("评论成功！");
+    }
 
 }

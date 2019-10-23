@@ -49,4 +49,33 @@ public class CommentServiceImpl implements CommentService{
         }
         return commentModelList;
     }
+
+    /**
+     * 通过评论id查找评论
+     * @param commentId
+     * @return
+     */
+    @Override
+    public CommentModel selectCommentByCommentId(Integer commentId) {
+        CommentModel commentModel = new CommentModel();
+        CommentDO commentDO = commentDOMapper.selectCommentByCommentId(commentId);
+        if(commentDO != null){
+            BeanUtils.copyProperties(commentDO,commentModel);
+        }
+        UserModel userModel = userService.selectUserById(commentDO.getCommentStudentId());
+        commentModel.setUser(userModel);
+
+
+        return commentModel;
+    }
+
+    @Override
+    public void insertComment(CommentModel commentModel) {
+        CommentDO commentDO = new CommentDO();
+        if(commentModel != null){
+            BeanUtils.copyProperties(commentModel,commentDO);
+        }
+        commentDO.setCommentStudentId(commentModel.getUser().getStudentId());
+        commentDOMapper.insertComment(commentDO);
+    }
 }
