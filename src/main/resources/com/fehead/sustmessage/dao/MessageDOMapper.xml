@@ -18,6 +18,14 @@
         photo,is_anonymous isAnonymous,student_id studentId,message_type_id messageTypeId,likes
         from message
     </select>
+
+    <!--按留言分类查找留言-->
+    <select id="selectMessageByMessageTypeId" parameterType="Integer" resultType="com.fehead.sustmessage.dataobject.MessageDO">
+        select id,message_date messageDate,message_content messageContent,
+        photo,is_anonymous isAnonymous,student_id studentId,message_type_id messageTypeId,likes
+        from message
+        where message_type_id=#{messageTypeId}
+    </select>
     <!--插入留言-->
     <insert id="publish" parameterType="com.fehead.sustmessage.dataobject.MessageDO">
         insert into message
@@ -37,6 +45,13 @@
         is_anonymous=#{isAnonymous},student_id=#{studentId},message_type_id=#{messageTypeId}
         where id=#{id}
 
+    </update>
+
+    <!--给留言点赞-->
+    <update id="like" parameterType="Integer">
+        update message
+        set likes = likes+1
+        where id=#{messageId}
     </update>
 
 </mapper>

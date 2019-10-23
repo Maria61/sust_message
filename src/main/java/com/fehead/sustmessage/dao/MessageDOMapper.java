@@ -1,6 +1,7 @@
 package com.fehead.sustmessage.dao;
 
 import com.fehead.sustmessage.dataobject.MessageDO;
+import com.fehead.sustmessage.service.model.MessageModel;
 
 import java.util.List;
 
@@ -17,6 +18,19 @@ public interface MessageDOMapper {
      * @return
      */
     List<MessageDO> selectMessages(String studentId);
+    /**
+     * 查找所有留言
+     * @return
+     */
+    List<MessageDO> selectAllMessages();
+
+    /**
+     * 按留言分类查找留言
+     * @param messageTypeId
+     * @return
+     */
+    List<MessageDO> selectMessageByMessageTypeId(Integer messageTypeId);
+
 
     /**
      *发布留言
@@ -39,9 +53,11 @@ public interface MessageDOMapper {
      */
     void update(MessageDO messageDO);
 
+
+
     /**
-     * 查找所有留言
-     * @return
+     * 为留言点赞
+     * @param messageId
      */
-    List<MessageDO> selectAllMessages();
+    void like(Integer messageId);
 }

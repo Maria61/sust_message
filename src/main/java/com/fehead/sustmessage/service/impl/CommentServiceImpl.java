@@ -78,4 +78,11 @@ public class CommentServiceImpl implements CommentService{
         commentDO.setCommentStudentId(commentModel.getUser().getStudentId());
         commentDOMapper.insertComment(commentDO);
     }
+
+    @Override
+    public void deleteComment(Integer commentId) {
+        commentDOMapper.deleteComment(commentId);
+    }
+
+
 }

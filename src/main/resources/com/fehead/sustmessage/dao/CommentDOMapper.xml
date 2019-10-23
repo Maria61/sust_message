@@ -27,4 +27,11 @@
         values
         (#{messageId},#{commentContent},#{commentPhoto},#{commentDate},#{commentStudentId})
     </insert>
+
+    <!--删除评论-->
+    <delete id="deleteComment" parameterType="Integer">
+        delete from comment where id = #{commentId}
+    </delete>
+
+
 </mapper>

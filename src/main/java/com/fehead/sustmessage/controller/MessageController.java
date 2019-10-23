@@ -241,4 +241,66 @@ public class MessageController {
         return CommonReturnType.create("评论成功！");
     }
 
+    /**
+     * 删除评论
+     * @param studentId
+     * @param messageId
+     * @param commentId
+     * @return
+     */
+    @DeleteMapping("/user/{studentId}/{messageId}/{commentId}")
+    public CommonReturnType deleteComment(@PathVariable("studentId") String studentId,
+                                          @PathVariable("messageId") Integer messageId,
+                                          @PathVariable("commentId")Integer commentId){
+
+        commentService.deleteComment(commentId);
+        return CommonReturnType.create("删除成功");
+
+    }
+
+    /**
+     * 给留言点赞
+     * @param studentId
+     * @param messageId
+     * @return
+     */
+    @PutMapping("/user/{studentId}/{messageId}/like")
+    public CommonReturnType like(@PathVariable("studentId") String studentId,
+                                 @PathVariable("messageId") Integer messageId){
+        messageService.like(messageId);
+        return CommonReturnType.create("点赞成功！");
+    }
+
+    @GetMapping("/message/lists/{messageTypeId}")
+    public CommonReturnType getMessageByTypeId(@PathVariable("messageTypeId") Integer messageTypeId){
+        List<MessageVO> messageVOList = new ArrayList<>();
+        List<MessageModel> messageModelList = new ArrayList<>();
+        messageModelList = messageService.selectMessageByMessageTypeId(messageTypeId);
+
+        for(MessageModel messageModel:messageModelList){
+            MessageVO messageVO = new MessageVO();
+            BeanUtils.copyProperties(messageModel,messageVO);
+
+            UserVO userVO = new UserVO();
+            UserModel userModel = messageModel.getUserModel();
+            BeanUtils.copyProperties(userModel,userVO);
+            messageVO.setStudent(userVO);
+
+            List<CommentListVO> commentListVOList = new ArrayList<>();
+            List<CommentModel> commentModelList = messageModel.getCommentModelList();
+            if(commentModelList != null){
+                for(CommentModel commentModel:commentModelList){
+                    CommentListVO commentListVO = new CommentListVO();
+                    BeanUtils.copyProperties(commentModel,commentListVO);
+                    commentListVO.setCommentatorId(commentModel.getUser().getStudentId());
+                    commentListVOList.add(commentListVO);
+                }
+            }
+            messageVO.setCommentListVO(commentListVOList);
+
+            messageVOList.add(messageVO);
+        }
+        return CommonReturnType.create(messageVOList);
+    }
+
 }

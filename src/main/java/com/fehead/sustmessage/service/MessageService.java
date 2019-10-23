@@ -24,6 +24,13 @@ public interface MessageService {
     List<MessageModel> selectAllMessages();
 
     /**
+     * 按留言分类查找留言
+     * @param messageTypeId
+     * @return
+     */
+    List<MessageModel> selectMessageByMessageTypeId(Integer messageTypeId);
+
+    /**
      * 发布留言
      * @param messageModel
      */
@@ -39,6 +46,12 @@ public interface MessageService {
      * @param messageModel
      */
     void updateMessage(MessageModel messageModel);
+
+    /**
+     * 给留言点赞
+     * @param commentId
+     */
+    void like(Integer messageId);
 
 
 }

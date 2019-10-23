@@ -88,6 +88,34 @@ public class MessageServiceImpl implements MessageService {
     }
 
     /**
+     * 按分类查找留言
+     * @param messageTypeId
+     * @return
+     */
+    @Override
+    public List<MessageModel> selectMessageByMessageTypeId(Integer messageTypeId) {
+        List<MessageModel> messageModelList = new ArrayList<>();
+        List<MessageDO> messageDOList = messageDOMapper.selectMessageByMessageTypeId(messageTypeId);
+
+
+        for(MessageDO messageDO:messageDOList){
+            MessageModel  messageModel = new MessageModel();
+            BeanUtils.copyProperties(messageDO,messageModel);
+
+            UserModel userModel = userService.selectUserById(messageDO.getStudentId());
+            messageModel.setUserModel(userModel);
+
+            List<CommentModel> commentModelList = commentService.selectCommentByMessageId(messageDO.getId());
+            messageModel.setCommentModelList(commentModelList);
+
+            messageModelList.add(messageModel);
+
+        }
+
+        return messageModelList;
+    }
+
+    /**
      * 发布留言
      * @param messageModel
      */
@@ -124,5 +152,13 @@ public class MessageServiceImpl implements MessageService {
         messageDOMapper.update(messageDO);
     }
 
+    /**
+     * 给留言点赞
+     * @param commentId
+     */
+    @Override
+    public void like(Integer messageId) {
+        messageDOMapper.like(messageId);
+    }
 
 }

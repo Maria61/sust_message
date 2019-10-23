@@ -28,4 +28,9 @@ public interface CommentDOMapper {
      * @param commentDO
      */
     void insertComment(CommentDO commentDO);
+
+    /**
+     * 删除评论
+     */
+    void deleteComment(Integer commentId);
 }

@@ -30,4 +30,11 @@ public interface CommentService {
      * @param messageId
      */
     void insertComment(CommentModel commentModel);
+
+    /**
+     * 删除评论
+     */
+    void deleteComment(Integer commentId);
+
+
 }
