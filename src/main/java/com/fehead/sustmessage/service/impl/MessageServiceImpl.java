@@ -1,5 +1,6 @@
 package com.fehead.sustmessage.service.impl;
 
+import com.fehead.sustmessage.dao.CommentDOMapper;
 import com.fehead.sustmessage.dao.MessageDOMapper;
 import com.fehead.sustmessage.dataobject.MessageDO;
 import com.fehead.sustmessage.service.CommentService;
@@ -31,6 +32,9 @@ public class MessageServiceImpl implements MessageService {
 
     @Autowired
     CommentService commentService;
+
+    @Autowired
+    CommentDOMapper commentDOMapper;
 
     /**
      * 通过用户Id查看所有留言
@@ -116,6 +120,29 @@ public class MessageServiceImpl implements MessageService {
     }
 
     /**
+     * 根据留言id查找留言
+     * @param id
+     * @return
+     */
+    @Override
+    public MessageModel selectMessageById(Integer id) {
+        MessageModel messageModel = new MessageModel();
+        MessageDO messageDO = messageDOMapper.selectMessageById(id);
+        if(messageDO != null){
+            BeanUtils.copyProperties(messageModel,messageDO);
+        }
+
+        UserModel userModel = userService.selectUserById(messageDO.getStudentId());
+        messageModel.setUserModel(userModel);
+
+        List<CommentModel> commentModelList = commentService.selectCommentByMessageId(messageDO.getId());
+        messageModel.setCommentModelList(commentModelList);
+
+        return messageModel;
+
+    }
+
+    /**
      * 发布留言
      * @param messageModel
      */
@@ -134,8 +161,9 @@ public class MessageServiceImpl implements MessageService {
      * @param messageId
      */
     @Override
-    public void delectMessage(Integer messageId) {
-        messageDOMapper.delect(messageId);
+    public void deleteMessage(Integer messageId) {
+        messageDOMapper.delete(messageId);
+        commentDOMapper.deleteCommentByMessageId(messageId);
     }
 
     /**
@@ -154,7 +182,7 @@ public class MessageServiceImpl implements MessageService {
 
     /**
      * 给留言点赞
-     * @param commentId
+     * @param messageId
      */
     @Override
     public void like(Integer messageId) {

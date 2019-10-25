@@ -11,6 +11,14 @@
         where student_id=#{studentId}
     </select>
 
+    <!--添加用户-->
+    <insert id="insertUser" parameterType="com.fehead.sustmessage.dataobject.UserDO">
+        insert into user
+        (student_id,telephone,display_name,avatar)
+        values
+        (#{studentId},#{telephone},#{displayName},#{avatar})
+
+    </insert>
 
 
 

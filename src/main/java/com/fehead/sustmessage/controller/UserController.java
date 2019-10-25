@@ -16,10 +16,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,22 +41,82 @@ public class UserController extends BaseController{
      * @return
      * @throws BusinessException
      */
-
     @GetMapping("/user/{studentId}/info")
     public CommonReturnType getUserById(@PathVariable("studentId") String studentId) throws BusinessException {
         logger.info("PARAM: studentId "+studentId);
         UserVO userVO = new UserVO();
         UserModel userModel = new UserModel();
-        try {
-            userModel = userService.selectUserById(studentId);
-        } catch (Exception e) {
-            throw new BusinessException(EmBusinessError.USER_NOT_EXIST);
+        userModel = userService.selectUserById(studentId);
+        if(userModel.getStudentId() == null){
+            logger.info("异常码："+EmBusinessError.USER_NOT_EXIST);
+            throw new BusinessException(EmBusinessError.USER_NOT_EXIST,"用户不存在");
         }
         BeanUtils.copyProperties(userModel,userVO);
+        logger.info("Success:selectUserById");
         return CommonReturnType.create(userVO);
     }
 
+    /**
+     * 用户登录
+     * @param studentId
+     * @param password
+     * @return
+     * @throws BusinessException
+     */
+    @PutMapping("/user/login/{studentId}/{password}")
+    public CommonReturnType login(@PathVariable("studentId") String studentId,
+                                  @PathVariable("password") String password) throws BusinessException {
+        logger.info("PARAM:studentId "+studentId);
+        logger.info("PARAM:password "+password);
+        Integer id = userService.selectPasswordIdByStudentIdAndPassWord(studentId,password);
+
+        if(id == null){
+            logger.info("异常码："+EmBusinessError.USER_LOGIN_FAIL);
+            throw new BusinessException(EmBusinessError.USER_LOGIN_FAIL);
+        }
+
+        logger.info("Success:selectPasswordIdByStudentIdAndPassWord");
+        return CommonReturnType.create("登录成功");
 
 
+    }
+
+    /**
+     * 用户注册
+     * @param studentId
+     * @param telephone
+     * @param displayName
+     * @param avatar
+     * @param password
+     * @return
+     * @throws BusinessException
+     */
+    @PutMapping("/user/register")
+    public CommonReturnType register(@RequestParam("studentId") String studentId,
+                                     @RequestParam("telephone") String telephone,
+                                     @RequestParam("displayName") String displayName,
+                                     @RequestParam("avatar") String avatar,
+                                     @RequestParam("password") String password) throws BusinessException {
+        logger.info("PARAM:studentId "+studentId);
+        logger.info("PARAM:telephone "+telephone);
+        logger.info("PARAM:displayName "+displayName);
+        logger.info("PARAM:avatar "+avatar);
+
+        if(userService.selectUserById(studentId).getStudentId() != null ){
+            throw new BusinessException(EmBusinessError.USER_EXIST);
+        }
+
+        UserModel userModel = new UserModel();
+        userModel.setAvatar(avatar);
+        userModel.setDisplayName(displayName);
+        userModel.setStudentId(studentId);
+        userModel.setTelephone(telephone);
+        userModel.setPassword(password);
+
+        userService.insertUser(userModel);
+        logger.info("Success:insertUser");
+        return CommonReturnType.create("注册成功");
+    }
+    
 
 }

@@ -31,6 +31,12 @@ public interface MessageDOMapper {
      */
     List<MessageDO> selectMessageByMessageTypeId(Integer messageTypeId);
 
+    /**
+     * 根据留言id查找留言
+     * @param id
+     * @return
+     */
+    MessageDO selectMessageById(Integer id);
 
     /**
      *发布留言
@@ -45,7 +51,7 @@ public interface MessageDOMapper {
      * 删除留言
      * @param messageId
      */
-    void delect(Integer messageId);
+    void delete(Integer messageId);
 
     /**
      * 修改留言

@@ -16,6 +16,13 @@ public interface UserDOMapper {
      */
     UserDO selectUserById(String studentId);
 
-
+    /**
+     * 注册
+     * @param studentId
+     * @param telephone
+     * @param displayName
+     * @param avatar
+     */
+    void insertUser(UserDO userDO);
 
 }

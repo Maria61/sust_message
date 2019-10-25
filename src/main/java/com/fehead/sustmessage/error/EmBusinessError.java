@@ -11,17 +11,19 @@ public enum EmBusinessError implements CommonError{
 
     UNKNOWN_ERROR(10002, "未知错误"),
     USER_NOT_EXIST(20001,"用户不存在"),
-    USER_LOGIN_FAIL(20002,"用户学号或者密码错误"),
+    USER_EXIST(20002,"用户已存在"),
+    USER_LOGIN_FAIL(20003,"用户学号或者密码错误"),
 
-    NO_MESSAGES(30001,"您没有发布过留言");
+    NO_MESSAGES(30001,"您没有发布过留言"),
+    NO_MESSAGE(30002,"该留言不存在");
 
+        private int errCode;
+        private String errMsg;
         //构造函数
         private EmBusinessError(int errCode, String errMsg){
             this.errCode = errCode;
             this.errMsg = errMsg;
         }
-        private int errCode;
-        private String errMsg;
 
         @Override
         public int getErrCode() {

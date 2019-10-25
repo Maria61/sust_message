@@ -33,4 +33,9 @@ public interface CommentDOMapper {
      * 删除评论
      */
     void deleteComment(Integer commentId);
+
+    /**
+     * 按留言id删除相应评论
+     */
+    void deleteCommentByMessageId(Integer messageId);
 }

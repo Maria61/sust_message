@@ -31,6 +31,10 @@ public interface MessageService {
     List<MessageModel> selectMessageByMessageTypeId(Integer messageTypeId);
 
     /**
+     * 根据留言id查找留言
+     */
+    MessageModel selectMessageById(Integer id);
+    /**
      * 发布留言
      * @param messageModel
      */
@@ -39,7 +43,7 @@ public interface MessageService {
     /**
      * 删除留言
      */
-    void delectMessage(Integer messageId);
+    void deleteMessage(Integer messageId);
 
     /**
      * 修改留言

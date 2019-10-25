@@ -33,5 +33,10 @@
         delete from comment where id = #{commentId}
     </delete>
 
+    <!--根据留言id删除评论-->
+    <delete id="deleteCommentByMessageId" parameterType="Integer">
+        delete from comment where message_id = #{message_Id}
+    </delete>
+
 
 </mapper>

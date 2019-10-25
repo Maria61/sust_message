@@ -1,5 +1,7 @@
 package com.fehead.sustmessage.service;
 
+import com.fehead.sustmessage.dataobject.PasswordDO;
+import com.fehead.sustmessage.dataobject.UserDO;
 import com.fehead.sustmessage.service.model.MessageModel;
 import com.fehead.sustmessage.service.model.UserModel;
 
@@ -16,5 +18,26 @@ public interface UserService {
      */
     UserModel selectUserById(String studentId) ;
 
+    /**
+     * 添加用户（注册）
+     * @param studentId
+     * @param telephone
+     * @param displayName
+     * @param avatar
+     */
+    void insertUser(UserModel userModel);
+
+    /**
+     * 添加密码记录（注册）
+     * @param studentId
+     * @param password
+     */
+    void insertPasswprd(String studentId,String password);
+    /**
+     *根据用户id和密码查找密码id（登录）
+     * @param studentId
+     * @param password
+     */
+    Integer selectPasswordIdByStudentIdAndPassWord(String studentId,String password);
 
 }

@@ -26,6 +26,14 @@
         from message
         where message_type_id=#{messageTypeId}
     </select>
+
+    <!--根据留言id查找留言-->
+    <select id="selectMessageById" parameterType="Integer" resultType="com.fehead.sustmessage.dataobject.MessageDO">
+        select id,message_date messageDate,message_content messageContent,
+        photo,is_anonymous isAnonymous,student_id studentId,message_type_id messageTypeId,likes
+        from message
+        where id=#{id}
+    </select>
     <!--插入留言-->
     <insert id="publish" parameterType="com.fehead.sustmessage.dataobject.MessageDO">
         insert into message
@@ -34,7 +42,7 @@
         (#{messageDate},#{messageContent},#{photo},#{isAnonymous},#{studentId},#{messageTypeId})
     </insert>
     <!--删除留言-->
-    <delete id="delect" parameterType="Integer">
+    <delete id="delete" parameterType="Integer">
         delete from message where id=#{messageId}
     </delete>
 
