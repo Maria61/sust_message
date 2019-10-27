@@ -1,5 +1,6 @@
 package com.fehead.sustmessage.service.model;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 public class MessageModel {
     private Integer id;
     private Date messageDate;
+    @NotBlank(message = "内容不能为空")
     private String messageContent;
     private String photo;
     private Boolean isAnonymous;

@@ -1,5 +1,7 @@
 package com.fehead.sustmessage.service.model;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * @author Maria
  * @program sustmessage
@@ -7,10 +9,14 @@ package com.fehead.sustmessage.service.model;
  */
 public class UserModel {
     private Integer id;
+    @NotBlank(message = "学号不能为空")
     private String studentId;
+    @NotBlank(message = "手机号不能为空")
     private String telephone;
+    @NotBlank(message = "昵称不能为空")
     private String displayName;
     private String avatar;
+    @NotBlank(message = "密码不能为空")
     private String password;
 
     public Integer getId() {

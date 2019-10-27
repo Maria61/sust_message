@@ -181,7 +181,7 @@ public class MessageController extends BaseController {
      * @param messageId
      * @return
      */
-    @GetMapping("/message/lists/{messageId}")
+    @GetMapping("/message/list/{messageId}")
     public CommonReturnType getMessageById(@PathVariable("messageId") Integer messageId) throws BusinessException {
         logger.info("PARAM:messageId"+messageId);
 

@@ -1,5 +1,7 @@
 package com.fehead.sustmessage.dataobject;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * @author Maria
  * @program sustmessage
@@ -7,8 +9,11 @@ package com.fehead.sustmessage.dataobject;
  */
 public class UserDO {
     private Integer id;
+
     private String studentId;
+
     private String telephone;
+
     private String displayName;
     private String avatar;
 

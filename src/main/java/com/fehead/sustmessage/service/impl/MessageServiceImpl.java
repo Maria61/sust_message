@@ -129,7 +129,7 @@ public class MessageServiceImpl implements MessageService {
         MessageModel messageModel = new MessageModel();
         MessageDO messageDO = messageDOMapper.selectMessageById(id);
         if(messageDO != null){
-            BeanUtils.copyProperties(messageModel,messageDO);
+            BeanUtils.copyProperties(messageDO,messageModel);
         }
 
         UserModel userModel = userService.selectUserById(messageDO.getStudentId());

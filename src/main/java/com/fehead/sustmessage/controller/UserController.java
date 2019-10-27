@@ -103,6 +103,7 @@ public class UserController extends BaseController{
         logger.info("PARAM:avatar "+avatar);
 
         if(userService.selectUserById(studentId).getStudentId() != null ){
+            logger.info("异常码："+EmBusinessError.USER_EXIST);
             throw new BusinessException(EmBusinessError.USER_EXIST);
         }
 
