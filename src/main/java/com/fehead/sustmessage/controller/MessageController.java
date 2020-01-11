@@ -35,7 +35,7 @@ import java.util.List;
 @RestController
 public class MessageController extends BaseController {
 
-    public static Log logger = LogFactory.getLog(UserController.class);
+    public static Log logger = LogFactory.getLog(MessageController.class);
 
     @Autowired
     MessageService messageService;
