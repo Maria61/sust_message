@@ -20,19 +20,17 @@ public interface UserService {
 
     /**
      * 添加用户（注册）
-     * @param studentId
-     * @param telephone
-     * @param displayName
-     * @param avatar
      */
     void insertUser(UserModel userModel);
 
+//
     /**
      * 添加密码记录（注册）
-     * @param studentId
-     * @param password
+//     * @param studentId
+//     * @param password
      */
-    void insertPasswprd(String studentId,String password);
+    void insertPassword(PasswordDO passwordDO);
+
     /**
      *根据用户id和密码查找密码id（登录）
      * @param studentId

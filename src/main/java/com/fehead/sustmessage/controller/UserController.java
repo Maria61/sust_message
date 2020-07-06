@@ -101,6 +101,7 @@ public class UserController extends BaseController{
         logger.info("PARAM:telephone "+telephone);
         logger.info("PARAM:displayName "+displayName);
         logger.info("PARAM:avatar "+avatar);
+        logger.info("PARAM:password "+password);
 
         if(userService.selectUserById(studentId).getStudentId() != null ){
             logger.info("异常码："+EmBusinessError.USER_EXIST);

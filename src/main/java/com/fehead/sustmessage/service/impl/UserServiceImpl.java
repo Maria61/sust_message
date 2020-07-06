@@ -52,10 +52,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 插入用户（注册）
-     * @param studentId
-     * @param telephone
-     * @param displayName
-     * @param avatar
+     *
      */
     @Override
     public void insertUser(UserModel userModel) {
@@ -66,19 +63,15 @@ public class UserServiceImpl implements UserService {
             BeanUtils.copyProperties(userModel,passwordDO);
         }
         userDOMapper.insertUser(userDO);
-        passwordDOMapper.insertPasswprd(passwordDO);
+        passwordDOMapper.insertPassword(passwordDO);
 
     }
 
     /**
      * 插入用户密码（注册）
-     * @param studentId
-     * @param password
      */
     @Override
-    public void insertPasswprd(String studentId, String password) {
-
-
+    public void insertPassword(PasswordDO passwordDO) {
     }
 
     /**

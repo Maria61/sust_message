@@ -130,14 +130,13 @@ public class MessageServiceImpl implements MessageService {
         MessageDO messageDO = messageDOMapper.selectMessageById(id);
         if(messageDO != null){
             BeanUtils.copyProperties(messageDO,messageModel);
+
+            UserModel userModel = userService.selectUserById(messageDO.getStudentId());
+            messageModel.setUserModel(userModel);
+
+            List<CommentModel> commentModelList = commentService.selectCommentByMessageId(messageDO.getId());
+            messageModel.setCommentModelList(commentModelList);
         }
-
-        UserModel userModel = userService.selectUserById(messageDO.getStudentId());
-        messageModel.setUserModel(userModel);
-
-        List<CommentModel> commentModelList = commentService.selectCommentByMessageId(messageDO.getId());
-        messageModel.setCommentModelList(commentModelList);
-
         return messageModel;
 
     }

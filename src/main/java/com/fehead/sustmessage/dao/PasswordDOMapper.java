@@ -11,14 +11,10 @@ public interface PasswordDOMapper {
 
     /**
      * 注册
-     * @param studentId
-     * @param password
      */
-    void insertPasswprd(PasswordDO passwordDO);
+    void insertPassword(PasswordDO passwordDO);
     /**
      *根据用户id和密码查找密码id
-     * @param studentId
-     * @param password
      */
     Integer selectPasswordIdByStudentIdAndPassWord(PasswordDO passwordDO);
 }

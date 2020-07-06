@@ -13,7 +13,7 @@
                 <property name="driver" value="com.mysql.jdbc.Driver"></property>
                 <property name="url" value="jdbc:mysql://localhost:3306/sust_message?useSSL=false&amp;characterEncoding=utf-8"></property>
                 <property name="username" value="root"></property>
-                <property name="password" value="899900"></property>
+                <property name="password" value="123456"></property>
             </dataSource>
         </environment>
     </environments>

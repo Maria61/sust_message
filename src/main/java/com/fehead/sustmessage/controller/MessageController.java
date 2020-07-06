@@ -414,7 +414,7 @@ public class MessageController extends BaseController {
         logger.info("PARAM:studentId"+studentId);
         logger.info("PARAM:messageId"+messageId);
 
-        if(messageService.selectMessageById(messageId).getUserModel().getStudentId() == null){
+        if(messageService.selectMessageById(messageId).getId() == null){
             logger.info("异常码："+EmBusinessError.NO_MESSAGE);
             throw new BusinessException(EmBusinessError.NO_MESSAGE);
         }

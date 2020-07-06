@@ -18,10 +18,6 @@ public interface UserDOMapper {
 
     /**
      * 注册
-     * @param studentId
-     * @param telephone
-     * @param displayName
-     * @param avatar
      */
     void insertUser(UserDO userDO);
 
