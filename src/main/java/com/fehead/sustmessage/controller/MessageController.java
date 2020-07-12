@@ -62,10 +62,13 @@ public class MessageController extends BaseController {
             MessageVO messageVO = new MessageVO();
             BeanUtils.copyProperties(messageModel,messageVO);
 
-            UserVO userVO = new UserVO();
-            UserModel userModel = messageModel.getUserModel();
-            BeanUtils.copyProperties(userModel,userVO);
-            messageVO.setStudent(userVO);
+            if(messageModel.getAnonymous() != true){
+                UserVO userVO = new UserVO();
+                UserModel userModel = messageModel.getUserModel();
+                BeanUtils.copyProperties(userModel,userVO);
+                messageVO.setStudent(userVO);
+            }
+
 
             List<CommentListVO> commentListVOList = new ArrayList<>();
             List<CommentModel> commentModelList = messageModel.getCommentModelList();

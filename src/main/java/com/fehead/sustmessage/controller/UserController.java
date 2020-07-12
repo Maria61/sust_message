@@ -91,7 +91,7 @@ public class UserController extends BaseController{
      * @return
      * @throws BusinessException
      */
-    @PutMapping("/user/register")
+    @PostMapping("/user/register")
     public CommonReturnType register(@RequestParam("studentId") String studentId,
                                      @RequestParam("telephone") String telephone,
                                      @RequestParam("displayName") String displayName,
